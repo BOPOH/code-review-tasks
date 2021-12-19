@@ -46,7 +46,7 @@ class Link
      * @ORM\OneToMany(targetEntity=LinkVisit::class, mappedBy="link", orphanRemoval=true)
      * @psalm-var ArrayCollection<int, LinkVisit>
      */
-    private ArrayCollection $linkVisits;
+    private Collection $linkVisits;
 
     public function __construct()
     {

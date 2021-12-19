@@ -26,13 +26,13 @@ class LinkController extends AbstractController
         $qb = $em->getRepository(LinkEntity::class)
             ->createQueryBuilder('link');
 
-        if ($title = $request->request->get('title')) {
+        if ($title = $request->query->get('title')) {
             $qb
                 ->andWhere($qb->expr()->like('link.title', ':title'))
                 ->setParameter('title', "%{$title}%");
         }
 
-        if ($tag = $request->request->get('tag')) {
+        if ($tag = $request->query->get('tag')) {
             $qb
                 ->andWhere(
                     $qb->expr()->like('CONCAT(\',\', link.tags, \',\')', ':tag')
