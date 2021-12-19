@@ -17,6 +17,12 @@ class BatchOperation
     }
 
     /**
+     * @psalm-param list<array{
+     *   id: int,
+     *   long_url: string,
+     *   title: string,
+     *   tags: array
+     * }> $links
      * @throws UnreachableUrlException
      */
     public function process(array $links): array
@@ -38,6 +44,14 @@ class BatchOperation
         return $result;
     }
 
+    /**
+     * @psalm-param array{
+     *   id: int,
+     *   long_url: string,
+     *   title: string,
+     *   tags: array
+     * } $linkData
+     */
     private function populateLinkDTO(array $linkData): Link
     {
         $linkData += [

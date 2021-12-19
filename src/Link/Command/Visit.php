@@ -18,9 +18,9 @@ class Visit
 
     public function visit(LinkEntity $entity, Request $request): LinkVisitEntity
     {
-        $ip = $request->getClientIp();
-        $userAgent = $request->headers->get('User-Agent');
-        $date = new \DateTime($request->headers->get('Date'));
+        $ip = (string)$request->getClientIp();
+        $userAgent = (string)$request->headers->get('User-Agent');
+        $date = new \DateTime((string)$request->headers->get('Date'));
 
         $linkVisit = new LinkVisitEntity();
         $linkVisit->setLink($entity);

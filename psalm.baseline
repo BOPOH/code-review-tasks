@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="v4.15.0@a1b5e489e6fcebe40cb804793d964e99fc347820">
+  <file src="src/Controller/LinkController.php">
+    <MixedArgument occurrences="1">
+      <code>$rawData</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="2">
+      <code>$rawData</code>
+      <code>$rawData</code>
+    </MixedAssignment>
+    <MixedOperand occurrences="1">
+      <code>$rawData</code>
+    </MixedOperand>
+    <PossiblyInvalidArgument occurrences="1">
+      <code>$request-&gt;getContent()</code>
+    </PossiblyInvalidArgument>
+    <UnnecessaryVarAnnotation occurrences="1">
+      <code>?LinkEntity</code>
+    </UnnecessaryVarAnnotation>
+  </file>
+  <file src="src/Entity/Link.php">
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>$id</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Entity/LinkVisit.php">
+    <MissingConstructor occurrences="5">
+      <code>$date</code>
+      <code>$id</code>
+      <code>$ip</code>
+      <code>$link</code>
+      <code>$userAgent</code>
+    </MissingConstructor>
+  </file>
+  <file src="src/Link/Command/BatchOperation.php">
+    <RedundantCastGivenDocblockType occurrences="2">
+      <code>(array)$linkData</code>
+      <code>(array)$linkData['tags']</code>
+    </RedundantCastGivenDocblockType>
+  </file>
+  <file src="src/Link/DTO/Link.php">
+    <MissingConstructor occurrences="1">
+      <code>$id</code>
+    </MissingConstructor>
+    <PossiblyNullPropertyAssignmentValue occurrences="1">
+      <code>$title</code>
+    </PossiblyNullPropertyAssignmentValue>
+  </file>
+  <file src="src/Repository/LinkRepository.php">
+    <LessSpecificImplementedReturnType occurrences="1">
+      <code>Link[]</code>
+    </LessSpecificImplementedReturnType>
+  </file>
+  <file src="src/Repository/LinkVisitRepository.php">
+    <LessSpecificImplementedReturnType occurrences="1">
+      <code>LinkVisit[]</code>
+    </LessSpecificImplementedReturnType>
+  </file>
+</files>

@@ -7,18 +7,18 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Link implements \JsonSerializable
 {
-    private $id;
+    private ?int $id;
 
     /**
      * @Assert\NotBlank
      */
-    private $url = '';
+    private string $url = '';
 
-    private $shortUrl = '';
+    private string $shortUrl = '';
 
-    private $title = '';
+    private string $title = '';
 
-    private $tags = [];
+    private array $tags = [];
 
     public static function fromEntity(?LinkEntity $entity): Link
     {
@@ -48,7 +48,7 @@ class Link implements \JsonSerializable
         return $this;
     }
 
-    public function getUrl(): ?string
+    public function getUrl(): string
     {
         return $this->url;
     }

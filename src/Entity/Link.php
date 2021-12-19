@@ -18,34 +18,35 @@ class Link
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      */
-    private $url = '';
+    private string $url = '';
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      */
-    private $shortUrl = '';
+    private string $shortUrl = '';
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $title = '';
+    private ?string $title = '';
 
     /**
      * @ORM\Column(type="simple_array", nullable=false)
      */
-    private $tags = [];
+    private array $tags = [];
 
     /**
      * @ORM\OneToMany(targetEntity=LinkVisit::class, mappedBy="link", orphanRemoval=true)
+     * @psalm-var ArrayCollection<int, LinkVisit>
      */
-    private $linkVisits;
+    private ArrayCollection $linkVisits;
 
     public function __construct()
     {
@@ -57,7 +58,7 @@ class Link
         return $this->id;
     }
 
-    public function getUrl(): ?string
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -69,7 +70,7 @@ class Link
         return $this;
     }
 
-    public function getShortUrl(): ?string
+    public function getShortUrl(): string
     {
         return $this->shortUrl;
     }
@@ -93,7 +94,7 @@ class Link
         return $this;
     }
 
-    public function getTags(): ?array
+    public function getTags(): array
     {
         return array_filter($this->tags);
     }
@@ -107,6 +108,7 @@ class Link
 
     /**
      * @return Collection|LinkVisit[]
+     * @psalm-return Collection<int, LinkVisit>
      */
     public function getLinkVisits(): Collection
     {

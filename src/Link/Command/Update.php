@@ -31,7 +31,6 @@ class Update
             return null;
         }
 
-        /** @var ?LinkEntity $entity */
         $entity = $this->em->find(LinkEntity::class, $dto->getId());
         if (!$entity) {
             return null;

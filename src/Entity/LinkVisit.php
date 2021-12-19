@@ -15,28 +15,28 @@ class LinkVisit
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=45)
      */
-    private $ip;
+    private string $ip;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $userAgent;
+    private string $userAgent;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date;
+    private \DateTime $date;
 
     /**
      * @ORM\ManyToOne(targetEntity=Link::class, inversedBy="linkVisits")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $link;
+    private ?Link $link;
 
     public function getId(): ?int
     {
@@ -67,12 +67,12 @@ class LinkVisit
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?\DateTime
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(\DateTime $date): self
     {
         $this->date = $date;
 
