@@ -1,0 +1,56 @@
+FROM ubuntu:18.04
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+WORKDIR /tmp
+
+RUN addgroup --gid 1000 developer
+RUN adduser --quiet --shell /bin/bash --uid 1000 --gid 1000 --disabled-password --gecos "" developer
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    locales \
+    zip unzip \
+    apt-transport-https \
+    software-properties-common \
+    gnupg2 \
+    apt-utils
+
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+    locale-gen
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+# ---------------------------------------------------------
+# Install packages & php extensions
+# ---------------------------------------------------------
+RUN add-apt-repository -y ppa:ondrej/php && \
+    apt-get install -y \
+    php7.4-cli \
+    php7.4-bcmath \
+    php7.4-mysql \
+    php7.4-gd \
+    php7.4-intl \
+    php7.4-soap \
+    php7.4-xml \
+    php7.4-zip \
+    php7.4-curl \
+    php7.4-apcu \
+    php7.4-mbstring \
+    php7.4-redis \
+    php7.4-memcached \
+    php7.4-amqp \
+    php7.4-xdebug \
+    php7.4-pcov
+
+RUN apt-get install -y git
+
+RUN apt-get autoremove -y && apt-get autoclean -y && \
+    rm -rf /var/cache/apt && \
+    rm -rf /var/lib/apt
+
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait
+RUN chmod +x /wait
+
+USER developer
