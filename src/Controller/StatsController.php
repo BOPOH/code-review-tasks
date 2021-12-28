@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Link as LinkEntity;
 use App\Entity\LinkVisit;
-use App\Link\Command\BatchOperation;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +20,7 @@ class StatsController extends AbstractController
     /**
      * @Route("", methods={"GET"})
      */
-    public function indexAction(Request $request, EntityManagerInterface $em, BatchOperation $batchOperation): Response
+    public function indexAction(Request $request, EntityManagerInterface $em): Response
     {
         $result = $em->getRepository(LinkVisit::class)
             ->createQueryBuilder('link_visit')
@@ -32,8 +31,7 @@ class StatsController extends AbstractController
             ->addGroupBy('link')
             ->addOrderBy('unique_views', 'DESC')
             ->getQuery()
-            ->getArrayResult()
-        ;
+            ->getArrayResult();
 
         return $this->json($result);
     }
@@ -41,7 +39,7 @@ class StatsController extends AbstractController
     /**
      * @Route("/{id}", methods={"GET"})
      */
-    public function linkAction(?LinkEntity $link, Request $request, EntityManagerInterface $em, BatchOperation $batchOperation): Response
+    public function linkAction(?LinkEntity $link, Request $request, EntityManagerInterface $em): Response
     {
         if (!$link) {
             throw $this->createNotFoundException('Link not found.');
