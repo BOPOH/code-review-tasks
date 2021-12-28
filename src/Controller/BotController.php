@@ -7,6 +7,7 @@ use App\Entity\LinkVisit;
 use App\Link\Command\Add;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -17,19 +18,8 @@ class BotController extends AbstractController
     /**
      * @Route("")
      */
-    public function indexAction(EntityManagerInterface $em, Add $addCommand)
+    public function indexAction(EntityManagerInterface $em, Add $addCommand, \BotMan\BotMan\BotMan $botman): Response
     {
-        $token = $this->container->get('TELEGRAM_TOKEN');
-        $config = [
-            "telegram" => [
-                "token" => $token
-            ]
-        ];
-
-        \BotMan\BotMan\Drivers\DriverManager::loadDriver(\BotMan\Drivers\Telegram\TelegramDriver::class);
-
-        $botman = \BotMan\BotMan\BotManFactory::create($config);
-
         $controller = $this;
         $botman->hears('long_url {long_url} {title}', function(\BotMan\BotMan\BotMan $bot, string $shortUrl, string $title) use ($controller, $em, $addCommand) {
             $controller->createRequest($bot, $em, $addCommand, $shortUrl, $title);
@@ -56,6 +46,8 @@ class BotController extends AbstractController
         });
 
         $botman->listen();
+
+        return new Response();
     }
 
     public function shortUrlRequest(\BotMan\BotMan\BotMan $bot, EntityManagerInterface $em, string $shortUrl)

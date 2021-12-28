@@ -28,3 +28,11 @@ services:
     App\EventListener\ExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
+
+    App\Bot\BotFactory:
+        arguments:
+            $token: '%env(resolve:TELEGRAM_TOKEN)%'
+
+    BotMan\BotMan\BotMan:
+        class: BotMan\BotMan\BotMan
+        factory: '@App\Bot\BotFactory'
